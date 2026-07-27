@@ -1,0 +1,17 @@
+{
+  "name": "pharaohlang",
+  "version": "1.0.0",
+  "description": "Ma'at — a programming language in Egyptian hieroglyphs",
+  "main": "dist/index.js",
+  "bin": {
+    "maat": "bin/maat.js"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^5.5.3"
+  },
+  "private": true
+}
