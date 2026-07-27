@@ -1,0 +1,11 @@
+𓍢 𓃀(req) {
+  𓂀("[Ma-at] Incoming: " + req.method + " " + req.path);
+  𓎡 (req.query == "token=ankh") {
+    𓌋 "TRUE";
+  } 𓌐 {
+    𓌋 "FALSE";
+  }
+}
+
+𓂒(3000, 𓃀);
+𓂀("[Ma-at] Server started on http://localhost:3000");

@@ -1,0 +1,11 @@
+// Line comment: declare variable
+𓈖 𓃂 = 1;
+
+/* Block comment:
+   Loop with comment
+   prints n, then increments
+*/
+// Inline comment test
+𓂀(𓃂); /* inline block comment */
+𓃂 = 𓃂 + 1; // trailing comment
+𓂀(𓃂);

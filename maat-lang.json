@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0",
+  "description": "Ma'at language syntax mapping — all sacred-script glyphs and their meanings",
+
+  "keywords": {
+    "\uD80C\uDE16": "let",
+    "\uD80C\uDFA1": "if",
+    "\uD80C\uDF10": "else",
+    "\uD80C\uDF6F": "while",
+    "\uD80C\uDF62": "fn",
+    "\uD80C\uDF0B": "return",
+    "\uD80C\uDF91": "true",
+    "\uD80C\uDF7D": "false",
+    "\uD80C\uDC86": "import",
+    "\uD80C\uDC87": "export",
+    "\uD80C\uDC88": "async",
+    "\uD80C\uDC89": "await",
+    "\uD80C\uDC8A": "spawn"
+  },
+
+  "typeNames": {
+    "\uD80C\uDC8B": "number",
+    "\uD80C\uDC8C": "string",
+    "\uD80C\uDC8D": "boolean",
+    "\uD80C\uDC8E": "array",
+    "\uD80C\uDC8F": "void",
+    "\uD80C\uDC90": "any",
+    "\uD80C\uDC91": "object"
+  },
+
+  "builtins": [
+    { "glyph": "\uD80C\uDC80", "label": "print",    "arity": 1, "impl": "print"     },
+    { "glyph": "\uD80C\uDC81", "label": "readFile",  "arity": 1, "impl": "readFile"  },
+    { "glyph": "\uD80C\uDC82", "label": "writeFile", "arity": 2, "impl": "writeFile" },
+    { "glyph": "\uD80C\uDC83", "label": "now",       "arity": 0, "impl": "now"       },
+    { "glyph": "\uD80C\uDC84", "label": "parseInt",  "arity": 1, "impl": "parseInt"  },
+    { "glyph": "\uD80C\uDC85", "label": "sleep",     "arity": 1, "impl": "sleep"     },
+    { "glyph": "\uD80C\uDC92", "label": "serve",     "arity": 2, "impl": "serve"     }
+  ]
+}

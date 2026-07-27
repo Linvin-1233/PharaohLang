@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ma'at 神判</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1a0a00 0%, #2d1810 30%, #1a0a00 60%, #0d0500 100%);
+    font-family: 'Georgia', 'Noto Sans Egyptian Hieroglyphs', serif;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; top:0; left:0; width:100%; height:100%;
+    background: radial-gradient(ellipse at 20% 80%, rgba(212,175,55,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(212,175,55,0.06) 0%, transparent 60%);
+    pointer-events: none; z-index:0;
+  }
+  .container {
+    position: relative; z-index:1;
+    background: rgba(20,10,2,0.85);
+    border: 2px solid #d4af37;
+    border-radius: 8px;
+    padding: 48px 40px;
+    max-width: 460px; width: 90%;
+    text-align: center;
+    box-shadow: 0 0 60px rgba(212,175,55,0.15), 0 0 120px rgba(212,175,55,0.05), inset 0 0 30px rgba(212,175,55,0.03);
+  }
+  h1 {
+    font-size: 2.2em;
+    color: #d4af37;
+    margin-bottom: 8px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px rgba(212,175,55,0.4);
+  }
+  .subtitle {
+    color: #a08050;
+    font-size: 0.95em;
+    margin-bottom: 36px;
+    letter-spacing: 2px;
+  }
+  .eye {
+    font-size: 3.5em;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(0 0 12px rgba(212,175,55,0.5));
+  }
+  label {
+    display: block;
+    color: #c0a060;
+    font-size: 0.85em;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1.1em;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid #6a5030;
+    border-radius: 4px;
+    color: #d4af37;
+    text-align: center;
+    letter-spacing: 3px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: inherit;
+  }
+  input:focus {
+    border-color: #d4af37;
+    box-shadow: 0 0 16px rgba(212,175,55,0.2);
+  }
+  button {
+    margin-top: 24px;
+    width: 100%;
+    padding: 14px;
+    font-size: 1.1em;
+    background: linear-gradient(180deg, #d4af37 0%, #a08020 100%);
+    border: none; border-radius: 4px;
+    color: #1a0a00;
+    font-weight: bold;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-family: inherit;
+  }
+  button:hover {
+    background: linear-gradient(180deg, #e8c44a 0%, #b89030 100%);
+    box-shadow: 0 0 24px rgba(212,175,55,0.3);
+    transform: translateY(-1px);
+  }
+  button:active { transform: translateY(0); }
+  button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .result {
+    margin-top: 32px;
+    padding: 20px;
+    border-radius: 6px;
+    font-size: 1.4em;
+    letter-spacing: 2px;
+    transition: all 0.5s;
+    min-height: 60px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .result.true {
+    background: rgba(212,175,55,0.12);
+    color: #d4af37;
+    border: 1px solid rgba(212,175,55,0.3);
+    text-shadow: 0 0 16px rgba(212,175,55,0.4);
+  }
+  .result.false {
+    background: rgba(139,0,0,0.2);
+    color: #cc3333;
+    border: 1px solid rgba(139,0,0,0.4);
+    text-shadow: 0 0 12px rgba(200,0,0,0.3);
+  }
+  .result.loading {
+    color: #a08050;
+    border: 1px solid rgba(160,128,80,0.3);
+  }
+  .hieroglyphs {
+    margin-top: 28px;
+    font-size: 1.8em;
+    color: #6a5030;
+    letter-spacing: 8px;
+    opacity: 0.6;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .loading .hieroglyphs { animation: pulse 1.5s infinite; }
+</style>
+</head>
+<body>
+<div class="container">
+  <span class="eye">𓂀</span>
+  <h1>Ma'at</h1>
+  <p class="subtitle">法 老 的 神 判</p>
+
+  <label for="token">请输入圣印（使者的暗语）：</label>
+  <input id="token" type="text" placeholder="ankh" spellcheck="false" autocomplete="off">
+
+  <button id="submit" onclick="submit()">接受神判</button>
+
+  <div id="result" class="result">
+    <span class="hieroglyphs">𓋹 𓂀 𓋹</span>
+  </div>
+</div>
+
+<script>
+async function submit() {
+  const token = document.getElementById('token').value || 'ankh';
+  const btn = document.getElementById('submit');
+  const result = document.getElementById('result');
+
+  btn.disabled = true;
+  result.className = 'result loading';
+  result.innerHTML = '<span class="hieroglyphs">𓁈 𓁉 𓁊</span>';
+
+  try {
+    const url = 'http://localhost:3000/validate?token=' + encodeURIComponent(token);
+    const resp = await fetch(url);
+    const text = await resp.text();
+    const passed = text.trim() === 'TRUE';
+
+    result.className = 'result ' + (passed ? 'true' : 'false');
+    result.innerHTML = passed
+      ? '<span style="font-size:1.4em;margin-right:8px">𓋹</span> 法老保佑你 <span style="font-size:1.4em;margin-left:8px">𓋹</span>'
+      : '<span style="font-size:1.4em;margin-right:8px">𓀠</span> 归于地狱 <span style="font-size:1.4em;margin-left:8px">𓀠</span>';
+  } catch (_) {
+    result.className = 'result false';
+    result.innerHTML = '&#x2620; 无法连接神判之殿 &#x2620;';
+  }
+
+  btn.disabled = false;
+}
+
+document.getElementById('token').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') submit();
+});
+</script>
+</body>
+</html>
